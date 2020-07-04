@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+        // Создать функцию-конструктор SuperMath. Добавить к экземпляру метод - check(obj), параметр obj которого имеет свойства X, Y, znak.
+        //     Пример обекта: obj = { X:12, Y:3, znak: “/”}, возможные варианты znak=> + - / * %.
+        // При вводе znak нужно сделать проверку корректности ввода на возможные математические действия.
+        //     Метод check должен подтвердить у пользователя хочет ли он произвести действие znak c Х и У.
+        //     Если - да, сделать математическое действие znak(которое описано в прототипе),
+        // иначе - запросить ввод новых данных через метод input() с прототипа функции-конструктор SuperMath.
+        //     p = new SuperMath();
+        // p.check(obj); // --> no p.input() -> 3 prompt -> считает
+//------------------------------------------------------------------------------------------------------------------------------------------------
+        function SuperMath(X,Y,znak){
+            while (znak!=='+'&& znak!=='-' && znak!=='/'&& znak!=='*'&& znak!=='%' ){
+                znak=prompt('znak должен быть одним из математических знаков, например  +, -, *, /, %')
+            }
+            this.X=X;
+            this.Y=Y;
+            this.znak=znak;
+
+        }
+
+        SuperMath.prototype.check= function () {
+            let actionRequest= confirm('желаете произвести математическую операцию '+'" ' + this.znak +' "'+'  между  ' + this.X +' и '+ this.Y);
+            while(this.znak==='/' && this.Y===0 ){
+                this.Y= +prompt('Если хотите произвести действие с делением, выберите другой делитель (Y), на 0 делить нельзя ')
+            }
+            if (actionRequest === true){
+                if (this.znak==='*') { return this.X * this.Y}
+                else if (this.znak==='/'){return this.X / this.Y}
+                else if (this.znak==='+'){return this.X + this.Y}
+                else if (this.znak==='-'){return this.X - this.Y}
+                else if (this.znak==='%'){return (this.X * (this.Y/100))}
+            }
+            else {
+                    return SuperMath.prototype.input()
+            }
+        };
+
+        SuperMath.prototype.input=function (){
+            this.X= +prompt('введите значение X');
+            while(isNaN(this.X)){
+                this.X= +prompt('X должнен быть числом')
+            }
+            this.Y= +prompt('введите значение Y');
+            while(isNaN(this.Y)){
+                this.Y= +prompt('Y должнен быть числом')
+            }
+            this.znak= prompt('введите значение znak');
+            while(this.znak==='/' && this.Y===0 ){
+                this.Y= +prompt('Если хотите произвести действие с делением, выберите другой делитель, на 0 делить нельзя ')
+            }
+            while(this.znak==='/' && this.Y===0 ){
+                this.Y= +prompt('Если хотите произвести действие с делением, выберите другой делитель, на 0 делить нельзя ')
+            }
+
+            while (this.znak!=='+'&& this.znak!=='-' && this.znak!=='/'&& this.znak!=='*'&& this.znak!=='%' ){
+                this.znak=prompt('znak должен быть одним из математических знаков, например  +, -, *, /, %')
+            }
+            return SuperMath.prototype.check()
+        };
+
+        someObject = new SuperMath(30,0,'/');
+        console.log(someObject.check());
+
+
+    </script>
+</body>
+</html>
